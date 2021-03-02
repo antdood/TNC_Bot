@@ -9,14 +9,18 @@ class db:
 
     def __init__(self):
 
-        try:                                                                                                                                                                                                                                                                            
-            db = MySQLdb.connect("antdoodawck.mysql.pythonanywhere-services.com", "antdoodawck", os.getenv("sql_password"), "antdoodawck$TNC_Data")
+        try:                                                                                                                 
+            host = os.getenv("db_host")
+            user = os.getenv("db_user")
+            pw = os.getenv("db_password")
+            dbname = os.getenv("db")
+            dbconn = MySQLdb.connect(host, user, pw, dbname)
             print("Database connection established.")
         except:
             print("Failed to connect to database. Aborting.")
             exit()
 
-        db._instance = self
+        db._instance = dbconn
 
         return
 
@@ -25,4 +29,4 @@ class db:
         if(db._instance == None):
             db()
 
-        return db._instance
+        return db._instance.cursor()

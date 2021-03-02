@@ -3,7 +3,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import re
-from db import db, getdb
+from db import db
 
 def isDiscTag(string):
     return re.search("^<@!\d+>$", string)
