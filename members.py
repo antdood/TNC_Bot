@@ -60,3 +60,11 @@ def nickToName(inNick):
             if nick == inNick:
                 return name
     return None
+
+def getAllNicks():
+    out = []
+
+    for nicks in members.values():
+        out += nicks
+
+    return out

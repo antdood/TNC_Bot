@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import MySQLdb
 from members import nickToName
+import operator
 
 load_dotenv()
 
@@ -36,6 +37,8 @@ class db:
 
     def newRankings(id, members):
         c = db.getdb().cursor()
+
+        # MySQL has no clean UPSERT so we just delete and reinsert ¯\_(ツ)_/¯
         c.execute(f"DELETE FROM rankings WHERE user={id}")
         
         for rank, m in enumerate(members):
@@ -49,4 +52,31 @@ class db:
         c = db.getdb().cursor()
         c.execute(f"SELECT * FROM rankings WHERE user={id} ORDER BY ranking")
         return c.fetchall()
+
+    def shiftRanking(user, nick, operation, amount):
+        # These aren't the other way round, we're dealing with rankings. Unintuitive, I know.
+        ops = {
+            '+' : operator.sub,
+            '-' : operator.add
+        }
+
+        c = db.getdb().cursor()
+        name = nickToName(nick)
+
+        c.execute(f"SELECT ranking FROM rankings WHERE user={user} AND member='{name}'")
+
+        oldRank = c.fetchone()[0]
+
+        newRank = ops[operation](oldRank, amount)
+
+        newRank = min(max(newRank, 1), 9)
+
+        # Can be a little clever with ternaries here but ¯\_(ツ)_/¯
+        if(operation == '+'):
+            c.execute(f"UPDATE rankings SET ranking = ranking + 1 WHERE user={user} AND ranking>={newRank} AND ranking<{oldRank}")
+        else:
+            c.execute(f"UPDATE rankings SET ranking = ranking - 1 WHERE user={user} AND ranking<={newRank} AND ranking>{oldRank}")
+        c.execute(f"UPDATE rankings SET ranking = {newRank} WHERE user={user} AND member='{name}'")
+        
+        db.getdb().commit()
 
