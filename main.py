@@ -20,7 +20,13 @@ def isMemberShift(string):
     return re.search(regex, string)
 
 def discTagToID(tag):
-    return tag[3:-1] # Could user discord's converter here but why? Non critical stuff + would need to await for stuff
+    # Could user discord's converter here but why? Non critical stuff + would need to await for stuff
+    charsToBeRemoved = ["<", "@", "!", ">"]
+
+    for c in charsToBeRemoved:
+        tag = tag.replace(c, "")
+
+    return tag
 
 async def showRanking(id, channel):
     rankings = db.getRankings(id)
