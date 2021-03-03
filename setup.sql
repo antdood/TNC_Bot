@@ -1,5 +1,3 @@
-SET autocommit = 0;
-
 CREATE TABLE members (
     member varchar(30),
     PRIMARY KEY (member)
