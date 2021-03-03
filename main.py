@@ -13,7 +13,7 @@ def getFile(path, mode = "r"):
     return open(cdir / path, mode)
 
 def isDiscTag(string):
-    return re.search("^<@!\d+>$", string)
+    return re.search("^<@!?\d+>$", string)
 
 def isMemberShift(string):
     regex = f'(?i)^({"|".join(getAllNicks())})[+-]\d*$'

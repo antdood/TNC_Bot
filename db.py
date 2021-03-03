@@ -19,6 +19,7 @@ class db:
             pw = os.getenv("db_password")
             dbname = os.getenv("db")
             dbconn = MySQLdb.connect(host, user, pw, dbname)
+            dbconn.ping(True)
             print("Database connection established.")
         except:
             print("Failed to connect to database. Aborting.")
