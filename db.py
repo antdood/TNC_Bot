@@ -50,7 +50,7 @@ class db:
 
     def getRankings(id):
         c = db.getdb().cursor()
-        c.execute(f"SELECT * FROM rankings WHERE user={id} ORDER BY ranking")
+        c.execute(f"SELECT member,ranking FROM rankings WHERE user={id} ORDER BY ranking")
         return c.fetchall()
 
     def shiftRanking(user, nick, operation, amount):

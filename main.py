@@ -5,6 +5,12 @@ import os
 import re
 from db import db
 from members import hasAllMembers, getAllNicks
+from pathlib import Path
+
+def getFile(path, mode = "r"):
+    cdir = Path(__file__).resolve().parent
+
+    return open(cdir / path, mode)
 
 def isDiscTag(string):
     return re.search("^<@!\d+>$", string)
@@ -14,10 +20,21 @@ def isMemberShift(string):
     return re.search(regex, string)
 
 def discTagToID(tag):
-    return tag[3:-1] # Could user discord's converter here but why? Non critical stuff
+    return tag[3:-1] # Could user discord's converter here but why? Non critical stuff + would need to await for stuff
 
 async def showRanking(id, channel):
-    await channel.send(db.getRankings(id))
+    rankings = db.getRankings(id)
+    
+    if rankings:
+        with getFile("templates/rankingMain.md") as mainFile, getFile("templates/list.md") as listFile:
+            mainTemplate = mainFile.read()
+            listTemplate = listFile.read()
+
+        text = mainTemplate.format(header = "__Rankings__", list = listTemplate.format(rankings))
+
+        await channel.send(text)
+    else:
+        await channel.send("This user has yet to set their rankings")
     return
 
 load_dotenv()
@@ -30,7 +47,7 @@ async def on_ready():
     print("Logged in.")
     db()
 
-@bot.command()
+@bot.command(aliases = ['rankings'])
 async def ranking(msg, *args):
 
     if(not args):
@@ -41,6 +58,7 @@ async def ranking(msg, *args):
 
     elif(len(args) == 9 and hasAllMembers(args)):
         db.newRankings(msg.author.id, args)
+        await showRanking(msg.author.id, msg.channel)
       
     elif(all(map(lambda x : isMemberShift(x), args))):
         for a in args:
@@ -50,6 +68,7 @@ async def ranking(msg, *args):
             amount = int(re.findall("(?<=[+-])\d*", a)[0] or 1)
 
             db.shiftRanking(msg.author.id, nick, operation, amount)
+        await showRanking(msg.author.id, msg.channel)
 
     else:
         await msg.channel.send("The fuck you trying to do mate")
