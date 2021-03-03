@@ -40,7 +40,7 @@ async def showRanking(id, channel):
 load_dotenv()
 
 TOKEN = os.getenv("discord_token")
-bot = commands.Bot(command_prefix="!")
+bot = commands.Bot(command_prefix="!", help_command=None)
 
 @bot.event
 async def on_ready():
@@ -72,5 +72,15 @@ async def ranking(msg, *args):
 
     else:
         await msg.channel.send("The fuck you trying to do mate")
+
+@bot.command()
+async def help(context):
+    with getFile("templates/help.md") as f:
+        await context.channel.send(f.read())
+
+@bot.command(aliases = ['credit'])
+async def credits(context):
+    with getFile("templates/credits.md") as f:
+        await context.channel.send(f.read())
 
 bot.run(TOKEN)
