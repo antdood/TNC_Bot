@@ -4,20 +4,22 @@ from dotenv import load_dotenv
 import os
 import re
 from db import db
+from members import hasAllMembers
 
 def isDiscTag(string):
     return re.search("^<@!\d+>$", string)
 
-def showRanking(id):
-    print(id)
+def discTagToID(tag):
+    return tag[3:-1] # Could user discord's converter here but why? Non critical stuff
 
-members = {"Nayeon", "Jeongyeon", "Momo", "Sana", "Jihyo", "Mina", "Dahyun", "Chaeyoung", "Tzuyu"}
+async def showRanking(id, channel):
+    print(db.getRankings(id))
+
+    await channel.send(db.getRankings(id))
 
 load_dotenv()
 
 TOKEN = os.getenv("discord_token")
-pw = os.getenv("sql_password")
-
 bot = commands.Bot(command_prefix="!")
 
 @bot.event
@@ -28,17 +30,14 @@ async def on_ready():
 @bot.command()
 async def ranking(msg, *args):
 
-    print(args)
-    
-    print(str(msg.author) + " | " + str(msg.author.id))
-
-    print(await commands.UserConverter().convert(msg, args[0]))
+    if(not args):
+        await showRanking(msg.author.id, msg.channel)
 
     if(len(args) == 1 and isDiscTag(args[0])):
-        showRanking(args[0])
+        await showRanking(discTagToID(args[0]), msg.channel)
 
-    if(len(args) == 9 and not (set(args)^members)):
-        print("redoing rankings")
-
+    if(len(args) == 9 and hasAllMembers(args)):
+        db.newRankings(msg.author.id, args)
+        
 
 bot.run(TOKEN)
