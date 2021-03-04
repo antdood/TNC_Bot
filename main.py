@@ -28,19 +28,21 @@ def discTagToID(tag):
 
     return tag
 
-async def showRanking(id, channel):
-    rankings = db.getRankings(id)
+async def showRanking(user, channel):
+    rankings = db.getRankings(user.id)
     
     if rankings:
         with getFile("templates/rankingMain.md") as mainFile, getFile("templates/list.md") as listFile:
             mainTemplate = mainFile.read()
             listTemplate = listFile.read()
 
-        text = mainTemplate.format(header = f"__Rankings of __ <@{id}>", list = listTemplate.format(rankings))
+        displayName = user.nick or user.name
+
+        text = mainTemplate.format(header = f"__Rankings of **{displayName}**__>", list = listTemplate.format(rankings))
 
         await channel.send(text)
     else:
-        await channel.send("This user has yet to set their rankings")
+        await channel.send(f"**{displayName}** has yet to set their rankings")
     return
 
 load_dotenv()
@@ -57,14 +59,15 @@ async def on_ready():
 async def ranking(msg, *args):
 
     if(not args):
-        await showRanking(msg.author.id, msg.channel)
+        await showRanking(msg.author, msg.channel)
 
     elif(len(args) == 1 and isDiscTag(args[0])):
-        await showRanking(discTagToID(args[0]), msg.channel)
+        for user in msg.message.mentions:
+            await showRanking(user, msg.channel)
 
     elif(len(args) == 9 and hasAllMembers(args)):
-        db.newRankings(msg.author.id, args)
-        await showRanking(msg.author.id, msg.channel)
+        db.newRankings(msg.author, args)
+        await showRanking(msg.author, msg.channel)
       
     elif(all(map(lambda x : isMemberShift(x), args))):
         if(db.userHasRankings(msg.author.id)):
@@ -75,7 +78,7 @@ async def ranking(msg, *args):
                 amount = int(re.findall("(?<=[+-])\d*", a)[0] or 1)
 
                 db.shiftRanking(msg.author.id, nick, operation, amount)
-            await showRanking(msg.author.id, msg.channel)
+            await showRanking(msg.author, msg.channel)
         else:
             await msg.channel.send("Please set your initial rankings before trying to change them. !help for more info.")
 
