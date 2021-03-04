@@ -67,14 +67,17 @@ async def ranking(msg, *args):
         await showRanking(msg.author.id, msg.channel)
       
     elif(all(map(lambda x : isMemberShift(x), args))):
-        for a in args:
-            # No need for validation here as that's done in isMemberShift
-            nick = re.findall("^\w+", a)[0]
-            operation = re.findall("[+-]", a)[0]
-            amount = int(re.findall("(?<=[+-])\d*", a)[0] or 1)
+        if(db.userHasRankings(msg.author.id)):
+            for a in args:
+                # No need for validation here as that's done in isMemberShift
+                nick = re.findall("^\w+", a)[0]
+                operation = re.findall("[+-]", a)[0]
+                amount = int(re.findall("(?<=[+-])\d*", a)[0] or 1)
 
-            db.shiftRanking(msg.author.id, nick, operation, amount)
-        await showRanking(msg.author.id, msg.channel)
+                db.shiftRanking(msg.author.id, nick, operation, amount)
+            await showRanking(msg.author.id, msg.channel)
+        else:
+            await msg.channel.send("Please set your initial rankings before trying to change them. !help for more info.")
 
     else:
         await msg.channel.send("The fuck you trying to do mate")

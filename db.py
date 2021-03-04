@@ -81,3 +81,7 @@ class db:
         
         db.getdb().commit()
 
+    def userHasRankings(user):
+        c = db.getdb().cursor()
+        c.execute(f"SELECT * FROM rankings WHERE user = {user}")
+        return c.fetchall()
