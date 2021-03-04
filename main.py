@@ -90,6 +90,6 @@ async def help(context):
 @bot.command(aliases = ['credit'])
 async def credits(context):
     with getFile("templates/credits.md") as f:
-        await context.channel.send(f.read())
+        await context.channel.send(f.read().format("<@158010930200838144>"))
 
 bot.run(TOKEN)
