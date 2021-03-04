@@ -38,7 +38,7 @@ async def showRanking(user, channel):
 
         displayName = user.nick or user.name
 
-        text = mainTemplate.format(header = f"__Rankings of **{displayName}**__>", list = listTemplate.format(rankings))
+        text = mainTemplate.format(header = f"__Rankings of **{displayName}**__", list = listTemplate.format(rankings))
 
         await channel.send(text)
     else:
@@ -66,7 +66,7 @@ async def ranking(msg, *args):
             await showRanking(user, msg.channel)
 
     elif(len(args) == 9 and hasAllMembers(args)):
-        db.newRankings(msg.author, args)
+        db.newRankings(msg.author.id, args)
         await showRanking(msg.author, msg.channel)
       
     elif(all(map(lambda x : isMemberShift(x), args))):
