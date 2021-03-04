@@ -36,7 +36,7 @@ async def showRanking(id, channel):
             mainTemplate = mainFile.read()
             listTemplate = listFile.read()
 
-        text = mainTemplate.format(header = "__Rankings__", list = listTemplate.format(rankings))
+        text = mainTemplate.format(header = f"__Rankings of __ <@{id}>", list = listTemplate.format(rankings))
 
         await channel.send(text)
     else:
