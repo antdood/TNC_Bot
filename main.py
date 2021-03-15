@@ -62,15 +62,21 @@ async def showGlobalRankings(channel, detailLevel = 0):
 
     memberScores = defaultdict(int)
 
-    for member, ranking, count in db.getRankingDistribution():
+    rankingData = db.getRankingDistribution()
+
+    for member, ranking, count in rankingData:
         memberScores[member] += (rankingScores[ranking] * count)
+
+    # Sort by score
+    memberScores = dict(sorted(memberScores.items(), key = lambda member : member[1], reverse = True))
     
     with getFile("templates/rankingMain.md") as mainFile, getFile("templates/globalList.md") as listFile:
         mainTemplate = mainFile.read()
         listTemplate = listFile.read()
 
-    # Sort by score
-    memberScores = dict(sorted(memberScores.items(), key = lambda member : member[1], reverse = True))
+    text = mainTemplate.format(header = f"__**Global Rankings**__", list = listTemplate.format(memberScores))
+
+    await channel.send(text)
 
 
 async def NANI(channel):
