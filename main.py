@@ -69,7 +69,7 @@ async def showGlobalRankings(channel):
         listTemplate = listFile.read()
 
     print(memberScores)
-    print(dict(sorted(memberScores.items(), lambda member : member[1], True)))
+    print(dict(sorted(memberScores.items(), key = lambda member : member[1], reverse = True)))
 
 load_dotenv()
 
