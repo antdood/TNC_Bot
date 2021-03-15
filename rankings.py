@@ -102,4 +102,4 @@ def memberAgeSort(member):
         "Tzuyu" : 9
     }
 
-    return ageSort[member]
+    return ageSort[member[0]]
