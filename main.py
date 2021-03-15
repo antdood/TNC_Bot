@@ -65,6 +65,8 @@ async def ranking(msg, *args):
         for user in msg.message.mentions:
             print(user)
             print(user.id)
+            print(user.name)
+            print(user.nick)
             await showRanking(user, msg.channel)
 
     elif(len(args) == 9 and hasAllMembers(args)):
