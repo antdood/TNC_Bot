@@ -59,7 +59,7 @@ def getAverageRankings(rankingDistribution = None):
     data = defaultdict(lambda: defaultdict(dict))
 
     for member, ranking, count in rankingDistribution:
-        data[member]["total"] += (rankings * count)
+        data[member]["total"] += (ranking * count)
         data[member]["count"] += count
 
     averages = {}
