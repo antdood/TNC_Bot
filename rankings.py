@@ -31,7 +31,7 @@ def generateGlobalRankingText(mode = "default"):
         for member, ranking, count in rankingDistribution:
             data[member][ranking] = count
 
-        data = dict(sorted(data,items(), key = memberAgeSort))
+        data = dict(sorted(data.items(), key = memberAgeSort))
 
         for member in data:
             text += f"**{member}**\n"
@@ -103,4 +103,3 @@ def memberAgeSort(member):
     }
 
     return ageSort[member]
-    
