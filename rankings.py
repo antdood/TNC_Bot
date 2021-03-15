@@ -21,8 +21,7 @@ def generateGlobalRankingText(mode = "default"):
             text += f"{averages[m]:.2f}. {m}\n"
 
     elif(mode == "full"):
-        text = "\n__**Full Stats**__\n"
-        text += "__Individual Stats__\n"
+        text = "\n__**Full Stats**__\n\n"
 
         #print(rankingDistribution)
         #print({member : {ranking : count} for member, ranking, count in rankingDistribution})
@@ -32,10 +31,13 @@ def generateGlobalRankingText(mode = "default"):
         for member, ranking, count in rankingDistribution:
             data[member][ranking] = count
 
+        data = dict(sorted(data,items(), key = memberAgeSort))
+
         for member in data:
             text += f"**{member}**\n"
             for rank in range(1,10):
-                text += f"Placed rank {rank} {data[member][rank]} times\n"
+                text += f"Placed rank **{rank}** __{data[member][rank]}__ times\n"
+            text += "\n"
 
     return text
 
@@ -86,3 +88,19 @@ def getAverageRankings(rankingDistribution = None, sort = True):
         averages = dict(sorted(averages.items(), key = lambda member : member[1]))
 
     return averages
+
+def memberAgeSort(member):
+    ageSort = {
+        "Nayeon" : 1,
+        "Jeongyeon" : 2,
+        "Momo" : 3,
+        "Sana" : 4,
+        "Jihyo" : 5,
+        "Mina" : 6,
+        "Dahyun" : 7,
+        "Chaeyoung" : 8,
+        "Tzuyu" : 9
+    }
+
+    return ageSort[member]
+    
