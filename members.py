@@ -1,6 +1,8 @@
 members = {
     "Nayeon": [
         "NAYEON",
+        "나",
+        "나연",
         "NA",
         "NAYEONNIE",
         "BUNNY",
@@ -8,42 +10,58 @@ members = {
         ],
     "Jeongyeon": [
         "JEONGYEON",
+        "정",
+        "정연",
         "JEONG",
         "JEONGERS"
     ],
     "Momo" : [
         "MOMO",
+        "모",
+        "모모",
         "MO",
         "MOMORING"
     ],
     "Sana" : [
         "SANA",
+        "사",
+        "사나",
         "SA"
     ],
     "Jihyo" : [
         "JIHYO",
+        "지",
+        "지효",
         "JI",
         "LEADER"
     ],
     "Mina" : [
         "MINA",
+        "미",
+        "미나",
         "MI",
         "PENGUIN",
         "MINARI"
     ],
     "Dahyun" : [
         "DAHYUN",
+        "다",
+        "다현",
         "DA",
         "DUBU",
         "TOFU"
     ],
     "Chaeyoung" : [
         "CHAEYOUNG",
+        "채",
+        "채영",
         "CHAE",
         "CUB"
     ],
     "Tzuyu" : [
         "TZUYU",
+        "쯔",
+        "쯔위",
         "TZU",
         "MAKNAE",
         "CHEWY"
