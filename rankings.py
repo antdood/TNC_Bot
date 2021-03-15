@@ -1,4 +1,4 @@
-import db
+from db import db
 from collections import defaultdict
 
 def generateGlobalRankingText(detailLevel = 0):
