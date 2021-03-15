@@ -61,6 +61,9 @@ async def ranking(msg, *args):
     if(not args):
         await showRanking(msg.author, msg.channel)
 
+    elif(len(args) == 1 and args[0] == "global"):
+        print(db.getRankingDistribution())
+
     elif(len(args) == 1 and isDiscTag(args[0])):
         #For loop here is superfluous. Using msg.message.mentions[0] is identical
         for user in msg.message.mentions:
