@@ -47,7 +47,7 @@ async def showRanking(user, channel):
     return
 
 async def showGlobalRankings(channel, mode = "default"):
-    for msg in rankings.generateGlobalRankingText(detailLevel):
+    for msg in rankings.generateGlobalRankingText(mode):
         await channel.send(msg)
 
 async def NANI(channel):
