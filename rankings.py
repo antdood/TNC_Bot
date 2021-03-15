@@ -64,6 +64,6 @@ def getAverageRankings(rankingDistribution = None):
 
     averages = {}
     for member in data:
-        averages[member] = total / count
+        averages[member] = data[member]["total"] / data[member]["count"]
 
     print(averages)
