@@ -6,6 +6,7 @@ import re
 from db import db
 from members import hasAllMembers, getAllNicks
 from pathlib import Path
+from collections import defaultdict
 
 def getFile(path, mode = "r"):
     cdir = Path(__file__).resolve().parent
@@ -74,7 +75,7 @@ async def ranking(msg, *args):
             9 : 0,
         }
 
-        memberScores = {}
+        memberScores = defaultdict(int)
 
         for member, ranking, count in db.getRankingDistribution():
             memberScores[member] += (rankingScores[ranking] * count)
