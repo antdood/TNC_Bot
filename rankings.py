@@ -24,10 +24,15 @@ def generateGlobalRankingText(mode = "default"):
         text = "\n__**Full Stats**__\n"
         text += "__Individual Stats__\n"
 
-        print(rankingDistribution)
-        print({member : {ranking : count} for member, ranking, count in rankingDistribution})
+        #print(rankingDistribution)
+        #print({member : {ranking : count} for member, ranking, count in rankingDistribution})
 
+        data = defaultdict(defaultdict(int))
 
+        for member, ranking, count in rankingDistribution:
+            data[member][ranking] = count
+
+        print(data)
 
     return text
 
