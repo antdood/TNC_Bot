@@ -38,6 +38,10 @@ async def showRanking(user, channel):
 
         displayName = user.nick or user.name
 
+        print("-------")
+        print(displayName)
+        print("-------")
+
         text = mainTemplate.format(header = f"__Rankings of **{displayName}**__", list = listTemplate.format(rankings))
 
         await channel.send(text)
