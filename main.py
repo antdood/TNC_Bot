@@ -51,9 +51,6 @@ async def showGlobalRankings(channel, detailLevel = 0):
 
     await channel.send(text)
 
-def calcAverageRankings(rankingData):
-
-
 async def NANI(channel):
     await channel.send("The fuck you trying to do mate")
 
