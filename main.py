@@ -33,15 +33,10 @@ async def showRanking(user, channel):
     
     displayName = user.nick or user.name
 
-    print("-------")
-    print(displayName)
-    print("-------")
-        
     if rankings:
         with getFile("templates/rankingMain.md") as mainFile, getFile("templates/list.md") as listFile:
             mainTemplate = mainFile.read()
             listTemplate = listFile.read()
-
 
         text = mainTemplate.format(header = f"__Rankings of **{displayName}**__", list = listTemplate.format(rankings))
 
@@ -67,12 +62,7 @@ async def ranking(msg, *args):
         await showRanking(msg.author, msg.channel)
 
     elif(len(args) == 1 and isDiscTag(args[0])):
-        for user in msg.message.mentions:
-            print(user)
-            print(user.id)
-            print(user.name)
-            print(user.nick)
-            await showRanking(user, msg.channel)
+        await showRanking(args[0], msg.channel)
 
     elif(len(args) == 9 and hasAllMembers(args)):
         db.newRankings(msg.author.id, args)
