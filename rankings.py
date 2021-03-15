@@ -39,6 +39,8 @@ def generateGlobalRankingText(mode = "default"):
                 text += f"Placed rank **{rank}** __{data[member][rank]}__ times\n"
             text += "\n"
 
+        print(text)
+
     return text
 
 def getMemberScores(rankingDistribution = None, sort = True):
