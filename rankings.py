@@ -5,6 +5,8 @@ def generateGlobalRankingText(mode = "default"):
     rankingDistribution = db.getRankingDistribution()
     memberScores = getMemberScores(rankingDistribution)
 
+    text = ""
+
     if(mode == "default"):
         text = f"__**Global Rankings**__\n\n"
         for i, m in enumerate(memberScores):
@@ -22,6 +24,7 @@ def generateGlobalRankingText(mode = "default"):
         text = "\n__**Full Stats**__\n"
         text += "__Individual Stats__\n"
 
+        print(rankingDistribution)
         print({member : {ranking : count} for member, ranking, count in rankingDistribution})
 
 
