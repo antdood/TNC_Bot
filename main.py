@@ -74,7 +74,7 @@ async def showGlobalRankings(channel, detailLevel = 0):
         mainTemplate = mainFile.read()
         listTemplate = listFile.read()
 
-    text = mainTemplate.format(header = f"__**Global Rankings**__", list = listTemplate.format(memberScores))
+    text = mainTemplate.format(header = f"__**Global Rankings**__", list = listTemplate.format(memberScores.items()))
 
     await channel.send(text)
 
