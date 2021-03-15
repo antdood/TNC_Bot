@@ -46,7 +46,8 @@ async def showRanking(user, channel):
         await channel.send(f"**{displayName}** has yet to set their rankings")
     return
 
-async def showGlobalRankings(channel):
+async def showGlobalRankings(channel, detailLevel = 0):
+    # Non linear as more weighting should be placed on higher ranks while scoring flattens on lower ranks.
     rankingScores = {
         1 : 10,
         2 : 7,
@@ -68,8 +69,12 @@ async def showGlobalRankings(channel):
         mainTemplate = mainFile.read()
         listTemplate = listFile.read()
 
-    print(memberScores)
-    print(dict(sorted(memberScores.items(), key = lambda member : member[1], reverse = True)))
+    # Sort by score
+    memberScores = dict(sorted(memberScores.items(), key = lambda member : member[1], reverse = True))
+
+
+async def NANI(channel):
+    await channel.send("The fuck you trying to do mate")
 
 load_dotenv()
 
@@ -85,10 +90,7 @@ async def on_ready():
 async def ranking(msg, *args):
 
     if(not args):
-        await showRanking(msg.author, msg.channel)
-
-    elif(len(args) == 1 and args[0] == "global"):
-        await showGlobalRankings(msg.channel)   
+        await showRanking(msg.author, msg.channel)          
 
     elif(len(args) == 1 and isDiscTag(args[0])):
         #For loop here is superfluous. Using msg.message.mentions[0] is identical
@@ -113,7 +115,24 @@ async def ranking(msg, *args):
             await msg.channel.send("Please set your initial rankings before trying to change them. !help for more info.")
 
     else:
-        await msg.channel.send("The fuck you trying to do mate")
+        await NANI(msg.channel)
+
+@bot.command(aliases = ['stat'])
+async def stats(msg, *args):
+
+    if(not args):
+        await showGlobalRankings(msg.channel) 
+
+    elif(len(args) == 1):
+        if(args[0] == '+'):
+            await showGlobalRankings(msg.channel, 1)
+        elif(args[0] == '++'):
+            await showGlobalRankings(msg.channel, 2)
+        else:
+            await NANI(msg.channel)
+
+    else:
+        await NANI(msg.channel)
 
 @bot.command()
 async def help(context):
