@@ -62,7 +62,9 @@ async def ranking(msg, *args):
         await showRanking(msg.author, msg.channel)
 
     elif(len(args) == 1 and isDiscTag(args[0])):
-        await showRanking(args[0], msg.channel)
+        #For loop here is superfluous. Using msg.message.mentions[0] is identical
+        for user in msg.message.mentions:
+            await showRanking(user, msg.channel)
 
     elif(len(args) == 9 and hasAllMembers(args)):
         db.newRankings(msg.author.id, args)
