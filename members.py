@@ -68,3 +68,8 @@ def getAllNicks():
         out += nicks
 
     return out
+
+def isMember(string):
+    if(string in getAllNicks()):
+        return nickToName(string)
+    return None
