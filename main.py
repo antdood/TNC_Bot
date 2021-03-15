@@ -46,6 +46,31 @@ async def showRanking(user, channel):
         await channel.send(f"**{displayName}** has yet to set their rankings")
     return
 
+async def showGlobalRankings(channel):
+    rankingScores = {
+        1 : 10,
+        2 : 7,
+        3 : 5,
+        4 : 4,
+        5 : 3,
+        6 : 2,
+        7 : 1,
+        8 : 0,
+        9 : 0
+    }
+
+    memberScores = defaultdict(int)
+
+    for member, ranking, count in db.getRankingDistribution():
+        memberScores[member] += (rankingScores[ranking] * count)
+    
+    with getFile("templates/rankingMain.md") as mainFile, getFile("templates/globalList.md") as listFile:
+        mainTemplate = mainFile.read()
+        listTemplate = listFile.read()
+
+    print(memberScores)
+    print(dict(sorted(memberScores.items(), key=lambda member : member[1])))
+
 load_dotenv()
 
 TOKEN = os.getenv("discord_token")
@@ -63,24 +88,7 @@ async def ranking(msg, *args):
         await showRanking(msg.author, msg.channel)
 
     elif(len(args) == 1 and args[0] == "global"):
-        rankingScores = {
-            1 : 10,
-            2 : 7,
-            3 : 5,
-            4 : 4,
-            5 : 3,
-            6 : 2,
-            7 : 1,
-            8 : 0,
-            9 : 0,
-        }
-
-        memberScores = defaultdict(int)
-
-        for member, ranking, count in db.getRankingDistribution():
-            memberScores[member] += (rankingScores[ranking] * count)
-        
-        print(memberScores)
+        showGlobalRankings(msg.channel)   
 
     elif(len(args) == 1 and isDiscTag(args[0])):
         #For loop here is superfluous. Using msg.message.mentions[0] is identical
