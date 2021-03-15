@@ -44,8 +44,7 @@ async def showRanking(user, channel):
         text = f"__Rankings of **{displayName}**__\n\n"
 
         for i, member in enumerate(rankings):
-            print(i)
-            print(member)
+            text += f"{i+1}. {member[0]}\n"
 
         await channel.send(text)
     else:
