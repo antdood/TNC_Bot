@@ -23,7 +23,7 @@ def generateGlobalRankingText(detailLevel = 0):
 
     return text
 
-def getMemberScores(rankingDistribution = None, sorted = True):
+def getMemberScores(rankingDistribution = None, sort = True):
     # Non linear as more weighting should be placed on higher ranks while scoring flattens on lower ranks.
     rankingScores = {
         1 : 10,
@@ -45,7 +45,7 @@ def getMemberScores(rankingDistribution = None, sorted = True):
     for member, ranking, count in rankingDistribution:
         memberScores[member] += (rankingScores[ranking] * count)
 
-    if(sorted):
+    if(sort):
         memberScores = dict(sorted(memberScores.items(), key = lambda member : member[1], reverse = True))
 
     return memberScores
