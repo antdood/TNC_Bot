@@ -70,6 +70,6 @@ def getAllNicks():
     return out
 
 def isMember(string):
-    if(string in getAllNicks()):
+    if(string.upper() in getAllNicks()):
         return nickToName(string)
     return None
