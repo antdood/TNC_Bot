@@ -62,7 +62,24 @@ async def ranking(msg, *args):
         await showRanking(msg.author, msg.channel)
 
     elif(len(args) == 1 and args[0] == "global"):
-        print(db.getRankingDistribution())
+        rankingScores = {
+            1 : 10,
+            2 : 7,
+            3 : 5,
+            4 : 4,
+            5 : 3,
+            6 : 2,
+            7 : 1,
+            8 : 0,
+            9 : 0,
+        }
+
+        memberScores = {}
+
+        for member, ranking, count in db.getRankingDistribution():
+            memberScores[member] += (rankingScores[ranking] * count)
+        
+        print(memberScores)
 
     elif(len(args) == 1 and isDiscTag(args[0])):
         #For loop here is superfluous. Using msg.message.mentions[0] is identical
