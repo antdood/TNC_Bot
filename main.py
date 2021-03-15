@@ -35,12 +35,6 @@ async def showRanking(user, channel):
     displayName = user.nick or user.name
 
     if rankings:
-        with getFile("templates/rankingMain.md") as mainFile, getFile("templates/list.md") as listFile:
-            mainTemplate = mainFile.read()
-            listTemplate = listFile.read()
-
-        #text = mainTemplate.format(header = f"__Rankings of **{displayName}**__", list = listTemplate.format(rankings))
-
         text = f"__Rankings of **{displayName}**__\n\n"
 
         for i, member in enumerate(rankings):
@@ -74,12 +68,8 @@ async def showGlobalRankings(channel, detailLevel = 0):
 
     # Sort by score
     memberScores = dict(sorted(memberScores.items(), key = lambda member : member[1], reverse = True))
-    
-    with getFile("templates/rankingMain.md") as mainFile, getFile("templates/globalList.md") as listFile:
-        mainTemplate = mainFile.read()
-        listTemplate = listFile.read()
 
-    text = mainTemplate.format(header = f"__**Global Rankings**__", list = listTemplate.format(memberScores.items()))
+    text = f"__**Global Rankings**__\n\n"
 
     await channel.send(text)
 
