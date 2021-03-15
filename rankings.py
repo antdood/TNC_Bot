@@ -21,6 +21,8 @@ def generateGlobalRankingText(detailLevel = 0):
 
         text += "\n__**Average Rankings**__"
 
+        getAverageRankings(rankingDistribution)
+
     return text
 
 def getMemberScores(rankingDistribution = None, sort = True):
@@ -50,3 +52,18 @@ def getMemberScores(rankingDistribution = None, sort = True):
 
     return memberScores
 
+def getAverageRankings(rankingDistribution = None):
+    if(not rankingDistribution):
+        rankingDistribution = db.getRankingDistribution()
+
+    data = defaultdict(lambda: defaultdict(dict))
+
+    for member, ranking, count in rankingDistribution:
+        data[member]["total"] += (rankings * count)
+        data[member]["count"] += count
+
+    averages = {}
+    for member in data:
+        averages[member] = total / count
+
+    print(averages)
