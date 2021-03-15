@@ -73,7 +73,11 @@ async def showGlobalRankings(channel, detailLevel = 0):
 
     if(detailLevel == 0):
         for i, member in enumerate(memberScores):
-            text += f"{i+1}. {member}"
+            text += f"{i+1}. {member}\n"
+
+    elif(detailLevel == 1):
+        for i, member in enumerate(memberScores):
+            text += f"{i+1}. {member} with a score of {memberScores[member]}\n"
 
     await channel.send(text)
 
