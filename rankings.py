@@ -1,30 +1,30 @@
 from db import db
 from collections import defaultdict
 
-def generateGlobalRankingText(detailLevel = 0):
+def generateGlobalRankingText(mode = "default"):
     rankingDistribution = db.getRankingDistribution()
     memberScores = getMemberScores(rankingDistribution)
 
-    text = f"__**Global Rankings**__\n\n"
+    if(mode == "default"):
+        text = f"__**Global Rankings**__\n\n"
+        for i, m in enumerate(memberScores):
+            text += f"{i+1}. {m} with a score of {memberScores[m]}\n"
 
-    if(detailLevel == 0):
-        for i, member in enumerate(memberScores):
-            text += f"{i+1}. {member}\n"
-
-    elif(detailLevel == 1):
-        for i, member in enumerate(memberScores):
-            text += f"{i+1}. {member} with a score of {memberScores[member]}\n"
-
-    elif(detailLevel == 2):
-        for i, member in enumerate(memberScores):
-            text += f"{i+1}. {member} with a score of {memberScores[member]}\n"
-
-        text += "\n__**Average Rankings**__"
+    elif(mode == "average"):
+        text = "\n__**Average Rankings**__\n"
 
         averages = getAverageRankings(rankingDistribution)
 
-        for member in averages:
-            text += f"{averages[member]:.2f}. {member}\n"
+        for m in averages:
+            text += f"{averages[m]:.2f}. {m}\n"
+
+    elif(mode == "full"):
+        text = "\n__**Full Stats**__\n"
+        text += "__Individual Stats__\n"
+
+        print({member : {ranking : count} for member, ranking, count in rankingDistribution})
+
+
 
     return text
 
@@ -72,6 +72,6 @@ def getAverageRankings(rankingDistribution = None, sort = True):
     # averages = {member: (val["total"] / val["count"]) for member, val in data.items()}
 
     if(sort):
-        averages = dict(sorted(averages.items(), key = lambda member : member[1], reverse = True))
+        averages = dict(sorted(averages.items(), key = lambda member : member[1]))
 
     return averages

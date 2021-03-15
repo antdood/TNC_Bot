@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 import re
 from db import db
-from members import hasAllMembers, getAllNicks
+from members import hasAllMembers, getAllNicks, nickToName
 from pathlib import Path
 from collections import defaultdict
 import rankings
@@ -102,10 +102,12 @@ async def stats(msg, *args):
         await showGlobalRankings(msg.channel) 
 
     elif(len(args) == 1):
-        if(args[0] == '+'):
-            await showGlobalRankings(msg.channel, 1)
-        elif(args[0] == '++'):
-            await showGlobalRankings(msg.channel, 2)
+        if(args[0] in ["avg", "average"]):
+            await showGlobalRankings(msg.channel, "average")
+        elif(args[0] in ["full"]):
+            await showGlobalRankings(msg.channel, "full")
+        elif(args[0] in getAllNicks()):
+            await showGlobalRankings(msg.channel, nickToName(args[0]))
         else:
             await NANI(msg.channel)
 
