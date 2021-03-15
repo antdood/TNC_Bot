@@ -31,16 +31,17 @@ def discTagToID(tag):
 async def showRanking(user, channel):
     rankings = db.getRankings(user.id)
     
+    displayName = user.nick or user.name
+
+    print("-------")
+    print(displayName)
+    print("-------")
+        
     if rankings:
         with getFile("templates/rankingMain.md") as mainFile, getFile("templates/list.md") as listFile:
             mainTemplate = mainFile.read()
             listTemplate = listFile.read()
 
-        displayName = user.nick or user.name
-
-        print("-------")
-        print(displayName)
-        print("-------")
 
         text = mainTemplate.format(header = f"__Rankings of **{displayName}**__", list = listTemplate.format(rankings))
 
