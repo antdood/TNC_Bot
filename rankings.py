@@ -34,7 +34,7 @@ def generateGlobalRankingText(mode = "default"):
     elif(member := members.isMember(mode)):
         rankCounts = getRankCounts(rankingDistribution)
         averages = getAverageRankings(rankingDistribution)
-        
+
         messages.append(generateRankingInfo(member, memberScores, rankCounts, averages))
             
     else:
@@ -51,7 +51,9 @@ def generateRankingInfo(member, memberScores = None, rankCounts = None, averages
     if(not averages):
         averages = getAverageRankings()
 
-    text = f"__**{member}**__\n\n"
+    text = f"__**{member}**__\n"
+    text += f"Ranked **#{memberScores.index(member) + 1}** with a score of **{memberScores[member]}**\n\n"
+
     text += f"Average Rank **{averages[member]:.2f}**\n"
 
     for rank in range(1,10):
