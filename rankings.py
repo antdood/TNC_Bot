@@ -52,7 +52,7 @@ def generateRankingInfo(member, memberScores = None, rankCounts = None, averages
         averages = getAverageRankings()
 
     text = f"__**{member}**__\n"
-    text += f"Ranked **#{memberScores.keys().index(member) + 1}** with a score of **{memberScores[member]}**\n\n"
+    text += f"Ranked **#{list(memberScores.keys()).index(member) + 1}** with a score of **{memberScores[member]}**\n\n"
 
     text += f"Average Rank **{averages[member]:.2f}**\n"
 
