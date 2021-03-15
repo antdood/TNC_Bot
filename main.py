@@ -63,6 +63,8 @@ async def ranking(msg, *args):
 
     elif(len(args) == 1 and isDiscTag(args[0])):
         for user in msg.message.mentions:
+        	print(user)
+        	print(user.id)
             await showRanking(user, msg.channel)
 
     elif(len(args) == 9 and hasAllMembers(args)):
