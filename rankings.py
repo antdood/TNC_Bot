@@ -56,7 +56,7 @@ def getAverageRankings(rankingDistribution = None):
     if(not rankingDistribution):
         rankingDistribution = db.getRankingDistribution()
 
-    data = defaultdict(lambda: defaultdict(dict))
+    data = defaultdict(lambda: defaultdict(int))
 
     for member, ranking, count in rankingDistribution:
         data[member]["total"] += (ranking * count)
