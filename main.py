@@ -46,10 +46,9 @@ async def showRanking(user, channel):
         await channel.send(f"**{displayName}** has yet to set their rankings")
     return
 
-async def showGlobalRankings(channel, detailLevel = 0):
-    text = rankings.generateGlobalRankingText(detailLevel)
-
-    await channel.send(text)
+async def showGlobalRankings(channel, mode = "default"):
+    for msg in rankings.generateGlobalRankingText(detailLevel):
+        await channel.send(msg)
 
 async def NANI(channel):
     await channel.send("The fuck you trying to do mate")

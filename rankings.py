@@ -5,12 +5,13 @@ def generateGlobalRankingText(mode = "default"):
     rankingDistribution = db.getRankingDistribution()
     memberScores = getMemberScores(rankingDistribution)
 
-    text = ""
+    messages = []
 
     if(mode == "default"):
         text = f"__**Global Rankings**__\n\n"
         for i, m in enumerate(memberScores):
             text += f"{i+1}. {m} with a score of {memberScores[m]}\n"
+        messages.append(text)
 
     elif(mode == "average"):
         text = "\n__**Average Rankings**__\n"
@@ -19,6 +20,8 @@ def generateGlobalRankingText(mode = "default"):
 
         for m in averages:
             text += f"{averages[m]:.2f}. {m}\n"
+
+        messages.append(text)
 
     elif(mode == "full"):
         text = "\n__**Full Stats**__\n\n"
@@ -36,13 +39,12 @@ def generateGlobalRankingText(mode = "default"):
         for member in data:
             text += f"**{member}**\n"
             for rank in range(1,10):
-                text += f"Ranked **{rank}** {data[member][rank]} times\n"
-            text += "\n"
+                text += f"Ranked **{rank}** __{data[member][rank]}__ times\n"
+            
+            messages.append(text)
+            text = ""
 
-        print(text)
-        print(len(text))
-
-    return text
+    return messages
 
 def getMemberScores(rankingDistribution = None, sort = True):
     # Non linear as more weighting should be placed on higher ranks while scoring flattens on lower ranks.
