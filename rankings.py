@@ -31,22 +31,24 @@ def generateGlobalRankingText(mode = "default"):
 
         for member in rankCounts:
             text += f"__**{member}**__\n\n"
-            text += f"Average Rank = {averages[member]:.2f}\n"
+            text += f"Average Rank __**{averages[member]:.2f}**__\n"
 
             for rank in range(1,10):
                 if(rankCounts[member][rank] == 0):
                     continue
-                text += f"Best Rank = **{rank}** __{rankCounts[member][rank]}__ times"
+                text += f"Best Rank :heart:**{rank}**:heart: __{rankCounts[member][rank]}__ times\n"
                 break
 
             for rank in reversed(range(1,10)):
                 if(rankCounts[member][rank] == 0):
                     continue
-                text += f"Worst Rank = **{rank}** __{rankCounts[member][rank]}__ times"
+                text += f"Worst Rank :broken_heart:**{rank}**:broken_heart: __{rankCounts[member][rank]}__ times\n"
                 break
 
+            text += "\n"
+
             for rank in range(1,10):
-                text += f"Ranked **{rank}** __{rankCounts[member][rank]}__ times\n"
+                text += f"Ranked **{rank}**:medal: {rankCounts[member][rank]} times\n"
             
             messages.append(text)
             text = ""
