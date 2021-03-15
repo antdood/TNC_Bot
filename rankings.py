@@ -27,7 +27,7 @@ def generateGlobalRankingText(mode = "default"):
         #print(rankingDistribution)
         #print({member : {ranking : count} for member, ranking, count in rankingDistribution})
 
-        data = defaultdict(defaultdict(int))
+        data = defaultdict(lambda: defaultdict(int))
 
         for member, ranking, count in rankingDistribution:
             data[member][ranking] = count
