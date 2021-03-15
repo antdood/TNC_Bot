@@ -36,7 +36,7 @@ def generateGlobalRankingText(mode = "default"):
         for member in data:
             text += f"**{member}**\n"
             for rank in range(1,10):
-                text += f"Placed rank **{rank}** __{data[member][rank]}__ times\n"
+                text += f"Ranked **{rank}** __{data[member][rank]}__ times\n"
             text += "\n"
 
         print(text)
