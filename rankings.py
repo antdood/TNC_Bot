@@ -40,6 +40,7 @@ def generateGlobalRankingText(mode = "default"):
             text += "\n"
 
         print(text)
+        print(len(text))
 
     return text
 
