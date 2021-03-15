@@ -7,6 +7,7 @@ from db import db
 from members import hasAllMembers, getAllNicks
 from pathlib import Path
 from collections import defaultdict
+import rankings
 
 def getFile(path, mode = "r"):
     cdir = Path(__file__).resolve().parent
@@ -46,40 +47,11 @@ async def showRanking(user, channel):
     return
 
 async def showGlobalRankings(channel, detailLevel = 0):
-    # Non linear as more weighting should be placed on higher ranks while scoring flattens on lower ranks.
-    rankingScores = {
-        1 : 10,
-        2 : 7,
-        3 : 5,
-        4 : 4,
-        5 : 3,
-        6 : 2,
-        7 : 1,
-        8 : 0,
-        9 : 0
-    }
-
-    memberScores = defaultdict(int)
-
-    rankingData = db.getRankingDistribution()
-
-    for member, ranking, count in rankingData:
-        memberScores[member] += (rankingScores[ranking] * count)
-
-    # Sort by score
-    memberScores = dict(sorted(memberScores.items(), key = lambda member : member[1], reverse = True))
-
-    text = f"__**Global Rankings**__\n\n"
-
-    if(detailLevel == 0):
-        for i, member in enumerate(memberScores):
-            text += f"{i+1}. {member}\n"
-
-    elif(detailLevel == 1):
-        for i, member in enumerate(memberScores):
-            text += f"{i+1}. {member} with a score of {memberScores[member]}\n"
+    text = rankings.generateGlobalRankingText(detailLevel)
 
     await channel.send(text)
+
+def calcAverageRankings(rankingData):
 
 
 async def NANI(channel):
