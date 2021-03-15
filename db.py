@@ -85,3 +85,8 @@ class db:
         c = db.getdb().cursor()
         c.execute(f"SELECT * FROM rankings WHERE user = {user}")
         return c.fetchall()
+
+    def getRankingDistribution():
+        c = db.getdb().cursor()
+        c.execute("SELECT member, ranking, count(*) FROM rankings GROUP BY member, ranking")
+        return c.fetchall()
