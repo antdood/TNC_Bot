@@ -103,7 +103,7 @@ async def stats(msg, *args):
     elif(len(args) == 1):
         if(args[0] in ["avg", "average"]):
             await showGlobalRankings(msg.channel, "average")
-        elif(args[0] in ["full"]):
+        elif(args[0] in ["full", "all"]):
             await showGlobalRankings(msg.channel, "full")
         elif(member := isMember(args[0])):
             await showGlobalRankings(msg.channel, args[0])
