@@ -32,7 +32,10 @@ def generateGlobalRankingText(mode = "default"):
         for member, ranking, count in rankingDistribution:
             data[member][ranking] = count
 
-        print(data)
+        for member in data:
+            text += f"**{member}**\n"
+            for rank in range(1,10):
+                text += f"Placed rank {rank} {data[member][rank]} times\n"
 
     return text
 
