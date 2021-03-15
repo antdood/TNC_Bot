@@ -26,23 +26,34 @@ def generateGlobalRankingText(mode = "default"):
     elif(mode == "full"):
         text = "\n__**Full Stats**__\n\n"
 
-        #print(rankingDistribution)
-        #print({member : {ranking : count} for member, ranking, count in rankingDistribution})
+        rankCounts = getRankCounts(rankingDistribution)
+        averages = getAverageRankings(rankingDistribution)
 
-        data = defaultdict(lambda: defaultdict(int))
+        for member in rankCounts:
+            text += f"__**{member}**__\n\n"
+            text += f"Average Rank = {averages[member]:.2f}\n"
 
-        for member, ranking, count in rankingDistribution:
-            data[member][ranking] = count
-
-        data = dict(sorted(data.items(), key = memberAgeSort))
-
-        for member in data:
-            text += f"**{member}**\n"
             for rank in range(1,10):
-                text += f"Ranked **{rank}** __{data[member][rank]}__ times\n"
+                if(rankCounts[member][rank] == 0):
+                    continue
+                text += f"Best Rank = **{rank}** __{rankCounts[member][rank]}__ times"
+                break
+
+            for rank in reversed(range(1,10)):
+                if(rankCounts[member][rank] == 0):
+                    continue
+                text += f"Worst Rank = **{rank}** __{rankCounts[member][rank]}__ times"
+                break
+
+            for rank in range(1,10):
+                text += f"Ranked **{rank}** __{rankCounts[member][rank]}__ times\n"
             
             messages.append(text)
             text = ""
+
+    else:
+        # Sadly this will never trigger. Too many checks before this point :sob:
+        messages.append("The only stat you're getting is of your complete fucking inability to follow simple intructions you imbecile. Go read a book.")
 
     return messages
 
@@ -93,6 +104,20 @@ def getAverageRankings(rankingDistribution = None, sort = True):
         averages = dict(sorted(averages.items(), key = lambda member : member[1]))
 
     return averages
+
+def getRankCounts(rankingDistribution = None, sort = True):
+    if(not rankingDistribution):
+        rankingDistribution = db.getRankingDistribution()
+
+    rankCounts = defaultdict(lambda: defaultdict(int))
+
+    for member, ranking, count in rankingDistribution:
+        rankCounts[member][ranking] = count
+
+    if(sort):
+        rankCounts = dict(sorted(rankCounts.items(), key = memberAgeSort))
+
+    return rankCounts
 
 def memberAgeSort(member):
     ageSort = {
