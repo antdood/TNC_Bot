@@ -65,5 +65,8 @@ def getAverageRankings(rankingDistribution = None):
     averages = {}
     for member in data:
         averages[member] = data[member]["total"] / data[member]["count"]
+    # Or in dict comprehension form
+    averages2 = {member: (val["total"] / val["count"]) for member, val in data.items()}
 
     print(averages)
+    print(averages2)
