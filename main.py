@@ -41,10 +41,7 @@ async def showRanking(user, channel):
         for i, member in enumerate(rankings):
             text += f"{i+1}. {member[0]}\n"
 
-        e = discord.Embed(title="Title", description="Desc", color=0x00ff00)
-        e.add_field(name="__Rankings of **{displayName}**__", value="ttt", inline = False)
-
-        await channel.send(embed=e)
+        await channel.send(text)
     else:
         await channel.send(f"**{displayName}** has yet to set their rankings")
     return
