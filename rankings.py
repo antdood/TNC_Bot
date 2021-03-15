@@ -43,7 +43,7 @@ def getMemberScores(rankingDistribution = None, sorted = True):
     memberScores = defaultdict(int)
 
     for member, ranking, count in rankingDistribution:
-    memberScores[member] += (rankingScores[ranking] * count)
+        memberScores[member] += (rankingScores[ranking] * count)
 
     if(sorted):
         memberScores = dict(sorted(memberScores.items(), key = lambda member : member[1], reverse = True))
