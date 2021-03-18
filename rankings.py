@@ -75,8 +75,6 @@ def generateRankingInfo(member, memberScores = None, rankCounts = None, averages
 
     return text
 
-
-
 def getMemberScores(rankingDistribution = None, sort = True):
     # Non linear as more weighting should be placed on higher ranks while scoring flattens on lower ranks.
     rankingScores = {

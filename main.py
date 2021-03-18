@@ -76,7 +76,7 @@ async def ranking(msg, *args):
 
     elif(len(args) == 1 and args[0] == "perfect"):
         # get global rankigns from db
-        print(db.getRankingDistribution())
+        print(rankings.getMemberScores())
         # get users that has rankings from db
 
     elif(len(args) == 9 and hasAllMembers(args)):
