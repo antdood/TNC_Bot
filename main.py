@@ -74,6 +74,9 @@ async def ranking(msg, *args):
         for user in msg.message.mentions:
             await showRanking(user, msg.channel)
 
+    elif(len(args) == 1 and args[0] == "perfect"):
+        await msg.channel.send("hi")
+
     elif(len(args) == 9 and hasAllMembers(args)):
         db.newRankings(msg.author.id, args)
         await showRanking(msg.author, msg.channel)
