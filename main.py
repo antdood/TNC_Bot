@@ -106,7 +106,7 @@ async def ranking(msg, *args):
 
         text = f"**{names}** has perfect rankings"
 
-        msg.channel.send(text)
+        await msg.channel.send(text)
 
 
 
