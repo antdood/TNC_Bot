@@ -63,7 +63,7 @@ async def showPerfectRankings(channel):
 
     if(not userIDs):
         # This could also report the next closest person in a future update
-        msg.channel.send("Noone has perfect rankings. We still await the prophet.")
+        channel.send("Noone has perfect rankings. We still await the prophet.")
         return
 
     names = []
