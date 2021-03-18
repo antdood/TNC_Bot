@@ -92,7 +92,6 @@ async def ranking(msg, *args):
             msg.channel.send("Noone has perfect rankings. We still await the prophet.")
             return
 
-        text = ""
         names = []
 
         for userID in userIDs:
@@ -105,7 +104,9 @@ async def ranking(msg, *args):
 
         names = ", ".join(names)
 
-        print(names) #antdood
+        text = f"**{names}** has perfect rankings"
+
+        msg.channel.send(text)
 
 
 
