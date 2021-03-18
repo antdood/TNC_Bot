@@ -87,16 +87,25 @@ async def ranking(msg, *args):
         for userThing in userIDsRaw:    
             userIDs.append(userThing[0])
 
-        print(userIDs)
+        if(not userIDs):
+            # This could also report the next closest person in a future update
+            msg.channel.send("Noone has perfect rankings. We still await the prophet.")
+            return
+
+        text = ""
+        names = []
 
         for userID in userIDs:
             user = bot.get_user(userID) or await bot.fetch_user(userID)
 
             if(not user):
-                msg.channel.send("User not found.")
-                return
+                break
 
-            await msg.channel.send(f"{user.name} has a perfect ranking")
+            names.append(user.name)
+
+        names = names.join(", ")
+
+        print(names)
 
 
 
