@@ -82,8 +82,8 @@ async def ranking(msg, *args):
         userIDsRaw = db.getUserIDsWithRanking(a)
 
         userIDs = []
-
         # This is just for ease of working with MySQLdb return types
+
         for userThing in userIDsRaw:    
             userIDs.append(userThing[0])
 
@@ -96,14 +96,9 @@ async def ranking(msg, *args):
                 msg.channel.send("User not found.")
                 return
 
-            print(user.id)
-            print(user.name)
-            print(user.created_at)
-            await user.send("hi")
+            msg.channel.send(f"{user.name} has a perfect ranking")
 
-            true1 or true2
 
-        # get users that has rankings from db
 
     elif(len(args) == 9 and hasAllMembers(args)):
         db.newRankings(msg.author.id, args)
