@@ -53,12 +53,7 @@ async def showGlobalRankings(channel, mode = "default"):
 async def showPerfectRankings(channel):
     rankedList = rankings.getMemberScores().keys()
 
-    a = ["Nayeon", "Sana", "Dahyun", "Mina", "Tzuyu", "Momo", "Jihyo", "Chaeyoung", "Jeongyeon"]
-
-    print(rankedList)
-    print(a)
-
-    userIDsRaw = db.getUserIDsWithRanking(a)
+    userIDsRaw = db.getUserIDsWithRanking(list(rankedList))
 
     userIDs = []
     # This is just for ease of working with MySQLdb return types
