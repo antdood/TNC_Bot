@@ -18,5 +18,7 @@ To view any individual member's stats, use !stats followed by the member (e.g. !
 
 To view all stats of all members, use !stats all (WARNING : This sends ALOT of data. Try to keep its use to a minimum)
 
+To view whose rankings correspond to the global rankings, use !rankings perfect
+
 For credits, use !credits 
 ```
