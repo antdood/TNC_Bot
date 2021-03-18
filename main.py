@@ -90,7 +90,11 @@ async def ranking(msg, *args):
         print(userIDs)
 
         for userID in userIDs:
-            print(await bot.fetch_user(userID))
+            user = await bot.fetch_user(userID)
+            print(user.id)
+            print(user.name)
+            print(user.created_at)
+            await user.send("hi")
 
         # get users that has rankings from db
 
