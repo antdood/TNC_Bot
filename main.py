@@ -75,7 +75,9 @@ async def ranking(msg, *args):
             await showRanking(user, msg.channel)
 
     elif(len(args) == 1 and args[0] == "perfect"):
-        await msg.channel.send("hi")
+        # get global rankigns from db
+        print(db.getRankingDistribution())
+        # get users that has rankings from db
 
     elif(len(args) == 9 and hasAllMembers(args)):
         db.newRankings(msg.author.id, args)
