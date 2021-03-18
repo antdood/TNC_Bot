@@ -103,9 +103,9 @@ async def ranking(msg, *args):
 
             names.append(user.name)
 
-        names = names.join(", ")
+        names = ", ".join(names)
 
-        print(names)
+        print(names) #antdood
 
 
 
