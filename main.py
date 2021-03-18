@@ -84,11 +84,13 @@ async def ranking(msg, *args):
         userIDs = []
 
         # This is just for ease of working with MySQLdb return types
-        for userThing in userIDsRaw:
+        for userThing in userIDsRaw:    
             userIDs.append(userThing[0])
 
-        print(userIDsRaw)
         print(userIDs)
+
+        for userID in userIDs:
+            await print(bot.fetch_user(userID))
 
         # get users that has rankings from db
 
