@@ -96,7 +96,7 @@ async def ranking(msg, *args):
                 msg.channel.send("User not found.")
                 return
 
-            msg.channel.send(f"{user.name} has a perfect ranking")
+            await msg.channel.send(f"{user.name} has a perfect ranking")
 
 
 
