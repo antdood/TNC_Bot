@@ -90,11 +90,18 @@ async def ranking(msg, *args):
         print(userIDs)
 
         for userID in userIDs:
-            user = await bot.fetch_user(userID)
+            user = bot.get_user(userID) or await bot.fetch_user(userID)
+
+            if(not user):
+                msg.channel.send("User not found.")
+                return
+
             print(user.id)
             print(user.name)
             print(user.created_at)
             await user.send("hi")
+
+            true1 or true2
 
         # get users that has rankings from db
 
