@@ -75,13 +75,20 @@ async def ranking(msg, *args):
             await showRanking(user, msg.channel)
 
     elif(len(args) == 1 and args[0] == "perfect"):
-        #rankedList = rankings.getMemberScores().keys()
+        rankedList = rankings.getMemberScores().keys()
 
         a = ["Nayeon", "Sana", "Dahyun", "Mina", "Tzuyu", "Momo", "Jihyo", "Chaeyoung", "Jeongyeon"]
 
-        print(db.getUserIDsWithRanking(a))
+        userIDsRaw = db.getUserIDsWithRanking(a)
 
+        userIDs = []
 
+        # This is just for ease of working with MySQLdb return types
+        for userThing in userIDsRaw:
+            userIDs.append(userThing[0])
+
+        print(userIDsRaw)
+        print(userIDs)
 
         # get users that has rankings from db
 
