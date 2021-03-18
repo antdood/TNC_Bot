@@ -50,6 +50,38 @@ async def showGlobalRankings(channel, mode = "default"):
     for msg in rankings.generateGlobalRankingText(mode):
         await channel.send(msg)
 
+async def showPerfectRankings(channel):
+    rankedList = rankings.getMemberScores().keys()
+
+    userIDsRaw = db.getUserIDsWithRanking(rankedList)
+
+    userIDs = []
+    # This is just for ease of working with MySQLdb return types
+
+    for userThing in userIDsRaw:    
+        userIDs.append(userThing[0])
+
+    if(not userIDs):
+        # This could also report the next closest person in a future update
+        msg.channel.send("Noone has perfect rankings. We still await the prophet.")
+        return
+
+    names = []
+
+    for userID in userIDs:
+        user = bot.get_user(userID) or await bot.fetch_user(userID)
+
+        if(not user):
+            break
+
+        names.append(user.name)
+
+    names = ", ".join(names)
+
+    text = f"**{names}** has perfect rankings"
+
+    await channel.send(text)
+
 async def NANI(channel):
     await channel.send("The fuck you trying to do mate")
 
@@ -75,40 +107,7 @@ async def ranking(msg, *args):
             await showRanking(user, msg.channel)
 
     elif(len(args) == 1 and args[0] == "perfect"):
-        rankedList = rankings.getMemberScores().keys()
-
-        a = ["Nayeon", "Sana", "Dahyun", "Mina", "Tzuyu", "Momo", "Jihyo", "Chaeyoung", "Jeongyeon"]
-
-        userIDsRaw = db.getUserIDsWithRanking(a)
-
-        userIDs = []
-        # This is just for ease of working with MySQLdb return types
-
-        for userThing in userIDsRaw:    
-            userIDs.append(userThing[0])
-
-        if(not userIDs):
-            # This could also report the next closest person in a future update
-            msg.channel.send("Noone has perfect rankings. We still await the prophet.")
-            return
-
-        names = []
-
-        for userID in userIDs:
-            user = bot.get_user(userID) or await bot.fetch_user(userID)
-
-            if(not user):
-                break
-
-            names.append(user.name)
-
-        names = ", ".join(names)
-
-        text = f"**{names}** has perfect rankings"
-
-        await msg.channel.send(text)
-
-
+        await showPerfectRankings(msg.channel)
 
     elif(len(args) == 9 and hasAllMembers(args)):
         db.newRankings(msg.author.id, args)
