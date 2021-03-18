@@ -90,3 +90,8 @@ class db:
         c = db.getdb().cursor()
         c.execute("SELECT member, ranking, count(*) FROM rankings GROUP BY member, ranking")
         return c.fetchall()
+
+    def getUserIDsWithRanking(rankedList):
+        c = db.getdb().cursor()
+        c.execute(f"select r1.user from rankings r1, rankings r2, rankings r3, rankings r4, rankings r5, rankings r6, rankings r7, rankings r8, rankings r9 where r1.member = '{rankedList[0]}' and r2.member = '{rankedList[1]}' and r3.member = '{rankedList[2]}' and r4.member = '{rankedList[3]}' and r5.member = '{rankedList[4]}' and r6.member = '{rankedList[5]}' and r7.member = '{rankedList[6]}' and r8.member = '{rankedList[7]}' and r9.member = '{rankedList[8]}'and r1.ranking = 1 and r2.ranking = 2 and r3.ranking = 3 and r4.ranking = 4 and r5.ranking = 5 and r6.ranking = 6 and r7.ranking = 7 and r8.ranking = 8 and r9.ranking = 9 and r1.user = r2.user and r1.user = r3.user and r1.user = r4.user and r1.user = r5.user and r1.user = r6.user and r1.user = r7.user and r1.user = r8.user and r1.user = r9.user;")
+        return c.fetchall()

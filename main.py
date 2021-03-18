@@ -75,10 +75,8 @@ async def ranking(msg, *args):
             await showRanking(user, msg.channel)
 
     elif(len(args) == 1 and args[0] == "perfect"):
-        # get global rankigns from db
         rankedList = rankings.getMemberScores().keys()
-        print(rankings.getMemberScores())
-        print(rankedList)
+
         # get users that has rankings from db
 
     elif(len(args) == 9 and hasAllMembers(args)):
