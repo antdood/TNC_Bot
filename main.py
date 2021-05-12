@@ -32,7 +32,7 @@ def discTagToID(tag):
 
 async def showRanking(user, channel):
     rankings = db.getRankings(user.id)
-    
+
     displayName = user.nick or user.name
 
     if rankings:
@@ -58,7 +58,7 @@ async def showPerfectRankings(channel):
     userIDs = []
     # This is just for ease of working with MySQLdb return types
 
-    for userThing in userIDsRaw:    
+    for userThing in userIDsRaw:
         userIDs.append(userThing[0])
 
     if(not userIDs):
@@ -99,7 +99,7 @@ async def on_ready():
 async def ranking(msg, *args):
 
     if(not args):
-        await showRanking(msg.author, msg.channel)          
+        await showRanking(msg.author, msg.channel)
 
     elif(len(args) == 1 and isDiscTag(args[0])):
         #For loop here is superfluous. Using msg.message.mentions[0] is identical
@@ -109,10 +109,14 @@ async def ranking(msg, *args):
     elif(len(args) == 1 and args[0] == "perfect"):
         await showPerfectRankings(msg.channel)
 
+    elif(len(args) == 3 and args[0] == "swap"):
+        db.swapRanks(msg.author, args[1], args[2])
+        await showRanking(msg.author, msg.channel)
+
     elif(len(args) == 9 and hasAllMembers(args)):
         db.newRankings(msg.author.id, args)
         await showRanking(msg.author, msg.channel)
-      
+
     elif(all(map(lambda x : isMemberShift(x), args))):
         if(db.userHasRankings(msg.author.id)):
             for a in args:
@@ -133,7 +137,7 @@ async def ranking(msg, *args):
 async def stats(msg, *args):
 
     if(not args):
-        await showGlobalRankings(msg.channel, "default") 
+        await showGlobalRankings(msg.channel, "default")
 
     elif(len(args) == 1):
         if(args[0] in ["avg", "average"]):

@@ -13,7 +13,7 @@ class db:
 
     def __init__(self):
 
-        try:                                                                                                                 
+        try:
             host = os.getenv("db_host")
             user = os.getenv("db_user")
             pw = os.getenv("db_password")
@@ -41,7 +41,7 @@ class db:
 
         # MySQL has no clean UPSERT so we just delete and reinsert ¯\_(ツ)_/¯
         c.execute(f"DELETE FROM rankings WHERE user={id}")
-        
+
         for rank, m in enumerate(members):
             c.execute(f"INSERT INTO rankings VALUES({id}, '{nickToName(m)}', {rank+1})")
 
@@ -78,7 +78,23 @@ class db:
         else:
             c.execute(f"UPDATE rankings SET ranking = ranking - 1 WHERE user={user} AND ranking<={newRank} AND ranking>{oldRank}")
         c.execute(f"UPDATE rankings SET ranking = {newRank} WHERE user={user} AND member='{name}'")
-        
+
+        db.getdb().commit()
+
+    def swapRanks(user, member1, member2):
+        c = db.getdb().cursor()
+        name1 = nickToName(member1)
+        name2 = nickToName(member2)
+
+        c.execute(f"SELECT ranking FROM rankings WHERE user={user} AND member='{name1}'")
+        name2_new_rank = c.fetchone()[0]
+
+        c.execute(f"SELECT ranking FROM rankings WHERE user={user} AND member='{name2}'")
+        name1_new_rank = c.fetchone()[0]
+
+        c.execute(f"UPDATE rankings SET ranking = {name1_new_rank} WHERE user={user} AND member='{name1}'")
+        c.execute(f"UPDATE rankings SET ranking = {name2_new_rank} WHERE user={user} AND member='{name2}'")
+
         db.getdb().commit()
 
     def userHasRankings(user):
