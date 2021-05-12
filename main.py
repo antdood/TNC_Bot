@@ -109,7 +109,7 @@ async def ranking(msg, *args):
     elif(len(args) == 1 and args[0] == "perfect"):
         await showPerfectRankings(msg.channel)
 
-    elif(len(args) == 3 and args[0] == "swap" and isMemberShift(args[1]) and isMemberShift(args[2])):
+    elif(len(args) == 3 and args[0] == "swap" and isMember(args[1]) and isMember(args[2])):
         db.swapRanks(msg.author, args[1], args[2])
         await showRanking(msg.author, msg.channel)
 
