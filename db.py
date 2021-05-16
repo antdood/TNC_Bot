@@ -83,17 +83,15 @@ class db:
 
     def swapRanks(user, member1, member2):
         c = db.getdb().cursor()
-        name1 = nickToName(member1)
-        name2 = nickToName(member2)
 
-        c.execute(f"SELECT ranking FROM rankings WHERE user={user} AND member='{name1}'")
-        name2_new_rank = c.fetchone()[0]
+        c.execute(f"SELECT ranking FROM rankings WHERE user={user} AND member='{member1}'")
+        mem2_new_rank = c.fetchone()[0]
 
-        c.execute(f"SELECT ranking FROM rankings WHERE user={user} AND member='{name2}'")
-        name1_new_rank = c.fetchone()[0]
+        c.execute(f"SELECT ranking FROM rankings WHERE user={user} AND member='{member2}'")
+        mem1_new_rank = c.fetchone()[0]
 
-        c.execute(f"UPDATE rankings SET ranking = {name1_new_rank} WHERE user={user} AND member='{name1}'")
-        c.execute(f"UPDATE rankings SET ranking = {name2_new_rank} WHERE user={user} AND member='{name2}'")
+        c.execute(f"UPDATE rankings SET ranking = {mem1_new_rank} WHERE user={user} AND member='{member1}'")
+        c.execute(f"UPDATE rankings SET ranking = {mem2_new_rank} WHERE user={user} AND member='{member2}'")
 
         db.getdb().commit()
 

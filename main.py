@@ -110,8 +110,11 @@ async def ranking(msg, *args):
         await showPerfectRankings(msg.channel)
 
     elif(len(args) == 3 and args[0] == "swap" and isMember(args[1]) and isMember(args[2])):
-        db.swapRanks(msg.author, args[1], args[2])
-        await showRanking(msg.author, msg.channel)
+        if(db.userHasRankings(msg.author.id)):
+            db.swapRanks(msg.author.id, nickToName(args[1]), nickToName(args[2]))
+            await showRanking(msg.author, msg.channel)
+        else:
+            await msg.channel.send("Please set your initial rankings before trying to change them. !help for more info.")
 
     elif(len(args) == 9 and hasAllMembers(args)):
         db.newRankings(msg.author.id, args)
